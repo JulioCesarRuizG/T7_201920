@@ -3,7 +3,7 @@ package model.data_structures;
 import java.util.Scanner;
 
 
-public class GrafoNoDirigido<K> {
+public class GrafoNoDirigido<K, V> {
 
 	private int cantidadVertices;
 	private Interseccion[] vertices;
@@ -53,10 +53,10 @@ public class GrafoNoDirigido<K> {
 		return null;
 	}
 	
-	public void setInfoVertex(K idVertex, double lon, double lat, int move)
+	public void setInfoVertex(K idVertex, V infoVertex)
 	{
 		Interseccion inter = getInfoVertes(idVertex);
-		inter.cambiarInformacion(lon, lat, move);
+		inter.cambiarInformacion(infoVertex);
 	}
 	
 	public double getCostArc(K idVertexIni, K idVertexFin)
@@ -99,9 +99,9 @@ public class GrafoNoDirigido<K> {
 		}
 	}
 	
-	public void addVertex(K idVertex, double lon, double lat, int move)
+	public void addVertex(K idVertex, V infoVertex)
 	{
-		Interseccion inter = new Interseccion(idVertex, lon, lat, move, null);
+		Interseccion inter = new Interseccion(idVertex, infoVertex, null);
 		vertices[cantidadVertices] = inter;
 		cantidadVertices++;
 	}

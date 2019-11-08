@@ -1,20 +1,16 @@
 package model.data_structures;
 
-public class Interseccion<K> {
+public class Interseccion<K, V> {
 
 	private K id;
-	private double lon;
-	private double lat;
-	private int move;
+	private V info;
 	private Arco[] arcos;
 	private boolean check;
 
-	public Interseccion(K pid, double plon, double plat, int pmovid,Arco[] parcos)
+	public Interseccion(K pid, V pinfo,Arco[] parcos)
 	{
 		id = pid;
-		lon = plon;
-		lat = plat;
-		move = pmovid;
+		info = pinfo;
 		arcos = parcos;
 	}
 
@@ -50,32 +46,9 @@ public class Interseccion<K> {
 		return id;
 	}
 	
-	public void cambiarInformacion(double plon, double plat, int pmove)
+	public void cambiarInformacion(V newInfo)
 	{
-		if(plon == 0)
-		{
-			
-		}
-		else
-		{
-			lon = plon;
-		}
-		if(plat == 0)
-		{
-			
-		}
-		else
-		{
-			lat = plat;
-		}
-		if(pmove == 0)
-		{
-			
-		}
-		else
-		{
-			move = pmove;
-		}
+		info = newInfo;
 	}
 	
 	public void marcar()
