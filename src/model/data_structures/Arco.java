@@ -1,17 +1,17 @@
 package model.data_structures;
 
-public class Arco {
+public class Arco<K> {
 
-	private int destino;
+	private K destino;
 	private double costo;
 	
-	public Arco(int pdestino, double pcosto)
+	public Arco(K pdestino, double pcosto)
 	{
 		destino = pdestino;
 		costo = pcosto;
 	}
 	
-	public int darDestino()
+	public K darDestino()
 	{
 		return destino;
 	}

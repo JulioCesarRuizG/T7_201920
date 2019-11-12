@@ -60,4 +60,9 @@ public class Interseccion<K, V> {
 	{
 		check = false;
 	}
+	
+	public V darInfo()
+	{
+		return info;
+	}
 }
