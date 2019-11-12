@@ -4,10 +4,10 @@ public class Interseccion<K, V> {
 
 	private K id;
 	private V info;
-	private Arco[] arcos;
+	private Arco<K>[] arcos;
 	private boolean check;
 
-	public Interseccion(K pid, V pinfo,Arco[] parcos)
+	public Interseccion(K pid, V pinfo,Arco<K>[] parcos)
 	{
 		id = pid;
 		info = pinfo;
@@ -23,7 +23,7 @@ public class Interseccion<K, V> {
 		return arcos.length;
 	}
 	
-	public Arco[] darArcos()
+	public Arco<K>[] darArcos()
 	{
 		return arcos;
 	}

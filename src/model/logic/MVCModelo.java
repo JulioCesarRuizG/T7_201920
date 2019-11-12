@@ -22,7 +22,7 @@ import model.data_structures.Queue;
 
 public class MVCModelo {
 	
-	private GrafoNoDirigido grafo;
+	private GrafoNoDirigido<Integer,Informacion> grafo;
 	
 	public MVCModelo() throws IOException
 	{
@@ -49,7 +49,7 @@ public class MVCModelo {
 			lineaActual2 = leer2.readLine();
 		}
 		
-		grafo = new GrafoNoDirigido(cantidad);
+		grafo = new GrafoNoDirigido<Integer,Informacion>(cantidad);
 		FileReader lector = new FileReader(txtvertices);
 		BufferedReader leer = new BufferedReader(lector);
 		String lineaActual = leer.readLine();
@@ -84,7 +84,7 @@ public class MVCModelo {
 			String[] valores = lineaActual3.split("0");
 			for(int i=1 ; i<valores.length ; i++)
 			{
-				grafo.setArc(valores[0], valores[i]);
+				grafo.setArc(Integer.valueOf(valores[0]), Integer.valueOf(valores[i]));
 				System.out.println(contador);
 				contador++;
 			}
@@ -138,11 +138,11 @@ public class MVCModelo {
 		writer.println("});");
 		writer.println("var line;");
 		writer.println("var path;");
-		for(Interseccion inter: grafo.darVertices())
+		for(Interseccion<Integer,Informacion> inter: grafo.darVertices())
 		{
-			for(Arco arcos : inter.darArcos())
+			for(Arco<Integer> arcos : inter.darArcos())
 			{
-				Interseccion llegada = grafo.getInfoVertes(arcos.darDestino());
+				Interseccion<Integer,Informacion> llegada = grafo.getInfoVertes(arcos.darDestino());
 				Informacion info = (Informacion) inter.darInfo();
 				Informacion infollegada = (Informacion) llegada.darInfo();
 				writer.println("line = [");
