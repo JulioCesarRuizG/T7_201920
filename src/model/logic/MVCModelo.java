@@ -20,7 +20,7 @@ import model.data_structures.Queue;
  *
  */
 
-public class MVCModelo {
+public class MVCModelo<K> {
 	
 	private GrafoNoDirigido<Integer,Informacion> grafo;
 	
@@ -68,12 +68,9 @@ public class MVCModelo {
 			int mov = Integer.parseInt(valores[3]);
 			Informacion info = new Informacion(lat, lon, mov);
 			grafo.addVertex(id, info);
-			System.out.println(contador);
-			contador++;
 			}
 			lineaActual = leer.readLine();
 		}
-		System.out.println("final1");
 		
 		
 		FileReader lector3 = new FileReader(txtarcos);
@@ -81,12 +78,23 @@ public class MVCModelo {
 		String lineaActual3 = leer3.readLine();
 		while(lineaActual3 != "" && lineaActual3 != null)
 		{
-			String[] valores = lineaActual3.split("0");
+			String[] valores = lineaActual3.split(" ");
 			for(int i=1 ; i<valores.length ; i++)
 			{
-				grafo.setArc(Integer.valueOf(valores[0]), Integer.valueOf(valores[i]));
-				System.out.println(contador);
-				contador++;
+				int val1 = Integer.parseInt(valores[0]);
+				int val2 = Integer.parseInt(valores[i]);
+				Informacion info1 = grafo.getInfoVertex2(val1);
+				Informacion info2 = grafo.getInfoVertex2(val2);
+				if(info1 != null && info2 != null)
+				{
+					double sin1 = Math.pow(Math.sin((info2.darLatitud()-info1.darLatitud())/2), 2);
+					double cos1 = Math.cos(info1.darLatitud());
+					double cos2 = Math.cos(info2.darLatitud());
+					double sin2 = Math.pow((Math.sin((info2.darLongitud()-info1.darLongitud())/2)), 2);
+					double interno = Math.asin(Math.sqrt(sin1+(cos1*cos2*sin2)));
+					double cost = 2*6371*interno;
+					grafo.setArcAndCost(val1, val2, cost);
+				}
 			}
 			
 			lineaActual3 = leer3.readLine();
@@ -97,7 +105,7 @@ public class MVCModelo {
 
 	public void crearArchivo() throws IOException
 	{
-		String ruta = "./data/mapa.txt";
+		String ruta = "./data/mapa.html";
 		int contador = 0;
 		PrintWriter writer = null;
 		try
@@ -142,27 +150,33 @@ public class MVCModelo {
 		{
 			for(Arco<Integer> arcos : inter.darArcos())
 			{
-				Interseccion<Integer,Informacion> llegada = grafo.getInfoVertes(arcos.darDestino());
-				Informacion info = (Informacion) inter.darInfo();
-				Informacion infollegada = (Informacion) llegada.darInfo();
-				writer.println("line = [");
-				writer.println("{");
-				writer.println("lat: " + info.darLatitud() + ",");
-				writer.println("lng: " + info.darLongitud());
-				writer.println("},");
-				writer.println("{");
-				writer.println("lat: " + infollegada.darLatitud()+ ",");
-				writer.println("lng: " + infollegada.darLongitud());
-				writer.println("}");
-				writer.println("];");
-				writer.println("path = new google.maps.Polyline({");
-				writer.println("path: line,");
-				writer.println("strokeColor: '#FF0000',");
-				writer.println("strokeWeight: 2");
-				writer.println("});");
-				writer.println("path.setMap(map);");
-				System.out.println(contador + "html");
-				contador++;
+				if(arcos != null)
+				{
+					Informacion llegada = grafo.getInfoVertex2(arcos.darDestino());
+					if(llegada != null)
+					{
+						Informacion info = (Informacion) inter.darInfo();
+						writer.println("line = [");
+						writer.println("{");
+						writer.println("lat: " + info.darLatitud() + ",");
+						writer.println("lng: " + info.darLongitud());
+						writer.println("},");
+						writer.println("{");
+						writer.println("lat: " + llegada.darLatitud()+ ",");
+						writer.println("lng: " + llegada.darLongitud());
+						writer.println("}");
+						writer.println("];");
+						writer.println("path = new google.maps.Polyline({");
+						writer.println("path: line,");
+						writer.println("strokeColor: '#FF0000',");
+						writer.println("strokeWeight: 2");
+						writer.println("});");
+						writer.println("path.setMap(map);");
+						contador++;
+						System.out.println(contador);
+					}
+				}
+				
 				
 			}
 			

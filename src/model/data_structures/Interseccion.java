@@ -11,7 +11,7 @@ public class Interseccion<K, V> {
 	{
 		id = pid;
 		info = pinfo;
-		arcos = parcos;
+		arcos = new Arco[6];
 	}
 
 	public int darCantidadArcos()
@@ -36,8 +36,14 @@ public class Interseccion<K, V> {
 		}
 		else
 		{
-			int valor = arcos.length;
-			arcos[valor] = i;
+			for(int j = 1; j<6 ; j++)
+			{
+				if(arcos[j] == null)
+				{
+					arcos[j] = i;
+				}
+			}
+			
 		}
 	}
 	
