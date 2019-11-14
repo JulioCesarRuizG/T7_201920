@@ -4,8 +4,10 @@ public class Interseccion<K, V> {
 
 	private K id;
 	private V info;
+	private int CanArcos;
 	private Arco<K>[] arcos;
 	private boolean check;
+	private Interseccion<K, V> conectado;
 
 	public Interseccion(K pid, V pinfo,Arco<K>[] parcos)
 	{
@@ -20,7 +22,7 @@ public class Interseccion<K, V> {
 		{
 			return 0;
 		}
-		return arcos.length;
+		return CanArcos;
 	}
 	
 	public Arco<K>[] darArcos()
@@ -33,6 +35,7 @@ public class Interseccion<K, V> {
 		if(arcos == null)
 		{
 			arcos[0] = i;
+			CanArcos++;
 		}
 		else
 		{
@@ -43,7 +46,7 @@ public class Interseccion<K, V> {
 					arcos[j] = i;
 				}
 			}
-			
+			CanArcos++;
 		}
 	}
 	
@@ -70,5 +73,20 @@ public class Interseccion<K, V> {
 	public V darInfo()
 	{
 		return info;
+	}
+	
+	public boolean estaMarcado()
+	{
+		return check;
+	}
+	
+	public void conectadoA(Interseccion a)
+	{
+		conectado = a;
+	}
+	
+	public Interseccion darConexion()
+	{
+		return conectado;
 	}
 }

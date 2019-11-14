@@ -25,7 +25,10 @@ public class GrafoNoDirigido<K, V> {
 		int cantidad = 0;
 		for(Interseccion inter : vertices)
 		{
-			cantidad = cantidad + inter.darCantidadArcos();
+			if(inter != null)
+			{
+				cantidad = cantidad + inter.darCantidadArcos();
+			}
 		}
 		return cantidad;
 	}
@@ -34,11 +37,14 @@ public class GrafoNoDirigido<K, V> {
 	{
 		for(Interseccion inter : vertices)
 		{
-			if(inter.darId() == idVertexIni)
+			if(inter != null)
 			{
-				int id = (int) idVertexFin;
-				Arco arc = new Arco(id, 0);
-				inter.agregarArco(arc);
+				if(inter.darId() == idVertexIni)
+				{
+					int id = (int) idVertexFin;
+					Arco arc = new Arco(id, cost);
+					inter.agregarArco(arc);
+				}
 			}
 		}
 	}
@@ -47,11 +53,14 @@ public class GrafoNoDirigido<K, V> {
 	{
 		for(Interseccion<K,V> inter : vertices)
 		{
-			int j= (int) inter.darId();
-			int k= (int) idVertex;
-			if(j == k)
+			if(inter != null)
 			{
-				return inter;
+				int j= (int) inter.darId();
+				int k= (int) idVertex;
+				if(j == k)
+				{
+					return inter;
+				}
 			}
 		}
 		return null;
@@ -61,11 +70,14 @@ public class GrafoNoDirigido<K, V> {
 	{
 		for(Interseccion<K,V> inter : vertices)
 		{
-			int j= (int) inter.darId();
-			int k= (int) idVertex;
-			if(j == k)
+			if(inter != null)
 			{
-				return inter.darInfo();
+				int j= (int) inter.darId();
+				int k= (int) idVertex;
+				if(j == k)
+				{
+					return inter.darInfo();
+				}
 			}
 		}
 		return null;
@@ -81,15 +93,22 @@ public class GrafoNoDirigido<K, V> {
 	{
 		for(Interseccion<K,V> inter : vertices)
 		{
-			if(inter.darId() == idVertexIni)
+			if(inter != null)
 			{
-				for(Arco<K> arc : inter.darArcos())
+				if(inter.darId() == idVertexIni)
 				{
-					K id = (K)arc.darDestino();
-					K id2 = (K) idVertexFin;
-					if(id == id2)
+					for(Arco<K> arc : inter.darArcos())
 					{
-						return arc.darCosto();
+						if(arc != null)
+						{
+							K id = (K)arc.darDestino();
+							K id2 = (K) idVertexFin;
+							if(id == id2)
+							{
+								return arc.darCosto();
+							}
+						}
+						
 					}
 				}
 			}
@@ -101,16 +120,22 @@ public class GrafoNoDirigido<K, V> {
 	{
 		for(Interseccion<K,V> inter : vertices)
 		{
-			if(inter.darId() == idVertexIni)
+			if(inter != null)
 			{
-				for(Arco<K> arc : inter.darArcos())
+				if(inter.darId() == idVertexIni)
 				{
-					K id =  arc.darDestino();
-					K id2 =  idVertexFin;
-					if(id == id2)
+					for(Arco<K> arc : inter.darArcos())
 					{
-						arc.cambiarCosto(cost);
-						return;
+						if(arc != null)
+						{
+							K id =  arc.darDestino();
+							K id2 =  idVertexFin;
+							if(id == id2)
+							{
+								arc.cambiarCosto(cost);
+								return;
+							}
+						}
 					}
 				}
 			}
@@ -122,6 +147,8 @@ public class GrafoNoDirigido<K, V> {
 		Arco<K> i = new Arco<K>(idVertexFin, 0);
 		for(Interseccion<K,V> inter : vertices)
 		{
+			if(inter != null)
+			{
 				int j= (int) inter.darId();
 				int k= (int) idVertexIni;
 				if(j == k)
@@ -129,6 +156,7 @@ public class GrafoNoDirigido<K, V> {
 					inter.agregarArco(i);
 					return;
 				}
+			}
 		}
 	}
 	
@@ -137,6 +165,8 @@ public class GrafoNoDirigido<K, V> {
 		Arco<K> i = new Arco<K>(idVertexFin, cost);
 		for(Interseccion<K,V> inter : vertices)
 		{
+			if(inter != null)
+			{
 				int j= (int) inter.darId();
 				int k= (int) idVertexIni;
 				if(j == k)
@@ -144,6 +174,7 @@ public class GrafoNoDirigido<K, V> {
 					inter.agregarArco(i);
 					return;
 				}
+			}
 		}
 	}
 	
@@ -159,15 +190,22 @@ public class GrafoNoDirigido<K, V> {
 		Queue<K> res= new Queue<K>(null);
 		for(Interseccion<K,V> inter : vertices)
 		{
-			if(inter.darId() == idVertex)
-			{ 
-				for(Arco<K> arc : inter.darArcos())
-				{
-					K id =  arc.darDestino();
-					res.enQueue(id);
+			if(inter != null)
+			{
+				if(inter.darId() == idVertex)
+				{ 
+					for(Arco<K> arc : inter.darArcos())
+					{
+						if(arc != null)
+						{
+							K id =  arc.darDestino();
+							res.enQueue(id);
+						}
+					}
+					return res.iterator();
 				}
-				return res.iterator();
 			}
+			
 		}
 		return res.iterator();
 	}
@@ -176,7 +214,10 @@ public class GrafoNoDirigido<K, V> {
 	{
 		for(Interseccion<K,V> inter : vertices)
 		{
-			inter.desmarcar();
+			if(inter != null)
+			{
+				inter.desmarcar();
+			}
 		}
 	}
 	
@@ -189,7 +230,31 @@ public class GrafoNoDirigido<K, V> {
 	
 	public int cc()
 	{
-		//falta implementar
+		uncheck();
+		int cantidad = 0;
+		for(Interseccion<K,V> inter : vertices)
+		{
+			if(inter != null)
+			{
+				for(Arco arco : inter.darArcos())
+				{
+					if(arco != null)
+					{
+						K buscar =  (K) arco.darDestino();
+						Interseccion interseccion = getInfoVertex(buscar);
+						if(!interseccion.estaMarcado())
+						{
+							cantidad++;
+							interseccion.marcar();
+							interseccion.conectadoA(inter);
+						}
+					}
+				}
+				inter.marcar();
+			}
+			
+		}
+		return cantidad;
 	}
 	
 	public Iterable<K> getCC(K idVertex)

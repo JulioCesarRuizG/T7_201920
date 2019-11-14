@@ -48,6 +48,7 @@ public class MVCModelo<K> {
 			}
 			lineaActual2 = leer2.readLine();
 		}
+		int cantidadVertices = 0;
 		
 		grafo = new GrafoNoDirigido<Integer,Informacion>(cantidad);
 		FileReader lector = new FileReader(txtvertices);
@@ -68,11 +69,13 @@ public class MVCModelo<K> {
 			int mov = Integer.parseInt(valores[3]);
 			Informacion info = new Informacion(lat, lon, mov);
 			grafo.addVertex(id, info);
+			cantidadVertices++;
 			}
 			lineaActual = leer.readLine();
 		}
+		System.out.println("Se han creado " + cantidadVertices + " vértices");
 		
-		
+		int cantidadArcos = 0;
 		FileReader lector3 = new FileReader(txtarcos);
 		BufferedReader leer3 = new BufferedReader(lector3);
 		String lineaActual3 = leer3.readLine();
@@ -94,12 +97,13 @@ public class MVCModelo<K> {
 					double interno = Math.asin(Math.sqrt(sin1+(cos1*cos2*sin2)));
 					double cost = 2*6371*interno;
 					grafo.setArcAndCost(val1, val2, cost);
+					cantidadArcos++;
 				}
 			}
 			
 			lineaActual3 = leer3.readLine();
 		}
-		System.out.println("final2");
+		System.out.println("Se han generado " + cantidadArcos + " arcos");
 		crearArchivo();
 	}
 
