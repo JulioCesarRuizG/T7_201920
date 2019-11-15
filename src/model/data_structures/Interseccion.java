@@ -3,17 +3,24 @@ package model.data_structures;
 public class Interseccion<K, V> {
 
 	private K id;
-	private V info;
 	private int CanArcos;
-	private Arco<K>[] arcos;
 	private boolean check;
+	private V info;
 	private Interseccion<K, V> conectado;
+	private Arco<K>[] arcos;
 
 	public Interseccion(K pid, V pinfo,Arco<K>[] parcos)
 	{
 		id = pid;
 		info = pinfo;
-		arcos = new Arco[6];
+		if(parcos != null)
+		{
+			arcos = parcos;
+		}
+		else
+		{
+			arcos = new Arco[6];
+		}
 	}
 
 	public int darCantidadArcos()

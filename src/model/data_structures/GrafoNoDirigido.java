@@ -6,9 +6,14 @@ import java.util.Scanner;
 
 public class GrafoNoDirigido<K, V> {
 
-	private int cantidadVertices;
 	private Interseccion<K,V>[] vertices;
+	private int cantidadVertices;
 
+	public GrafoNoDirigido(Interseccion[] inter)
+	{
+		vertices = inter;
+	}
+	
 	public GrafoNoDirigido(int n)
 	{
 		vertices = new Interseccion[n];

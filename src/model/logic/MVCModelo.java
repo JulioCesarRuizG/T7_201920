@@ -9,6 +9,9 @@ import java.io.PrintWriter;
 
 import javax.management.Query;
 
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
+
 import model.data_structures.Arco;
 import model.data_structures.GrafoNoDirigido;
 import model.data_structures.Informacion;
@@ -194,13 +197,90 @@ public class MVCModelo<K> {
 		writer.println("</html>");
 		writer.close();
 		System.out.println("Carga completada");
+		persistirJson();
 		
+	}
+	
+	public void persistirJson()
+	{
+		String ruta = "./data/dataJson.json";
+		int contador = 0;
+		PrintWriter writer = null;
+		try
+		{
+			writer = new PrintWriter(ruta);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		writer.println("{");
+		writer.println("\"type\":\"GrafoNoDirgido\",\"vertices\":[");
+		int arcos2 = 0;
+		int vertices2 = 0;
+		for(Interseccion inter : grafo.darVertices())
+		{
+			if(inter != null)
+			{
+				vertices2++;
+				Informacion info = (Informacion) inter.darInfo(); 
+				writer.println("{\"type\":\"Interseccion\",");
+				writer.println("\"id\":" + inter.darId()+",");
+				writer.println("\"canArcos\":" + inter.darCantidadArcos()+",");
+				writer.println("\"check\":" + inter.estaMarcado()+",");
+				writer.println("\"info\":{\"type\":\"Informacion\",");
+				writer.println("\"lat\":" + info.darLatitud()+",");
+				writer.println("\"lon\":" + info.darLongitud()+",");
+				writer.println("\"move\":" + info.darMovementeID()+",");
+				writer.println("},");
+				writer.println("\"arcos\":[");
+				for(Arco arcos : inter.darArcos())
+				{
+					if(arcos != null)
+					{
+						writer.println("{\"type\":\"Arco\",");
+						writer.println("\"destino\":" + arcos.darDestino()+",");
+						writer.println("\"costo\":" + arcos.darCosto()+",");
+						
+						arcos2++;
+					}
+					if(arcos2 == inter.darCantidadArcos())
+					{
+						writer.println("}");
+					}
+					else
+					{
+						writer.println("},");
+					}
+				}
+				if(grafo.V() == vertices2)
+				{
+					writer.println("},");
+				}
+				else
+				{
+					writer.println("}");
+				}
+			}
+		}
+		writer.println("]}");
+		
+	}
+	
+	public void cargarJson()
+	{
+		String path = "./data/dataJson.json";
+		JsonReader reader;
+		Gson gson = new Gson();
+		try {
+			reader = new JsonReader(new FileReader(path));
+			GrafoNoDirigido lista3 = gson.fromJson(reader, GrafoNoDirigido.class);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void main(String[] args) throws IOException {
 		MVCModelo modelo = new MVCModelo();
 	}
-	
 	
 }
 
